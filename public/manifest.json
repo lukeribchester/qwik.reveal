@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "qwik.reveal",
+  "short_name": "Qwik Reveal",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "A Qwik library for scroll and time-driven reveal animations"
+}
