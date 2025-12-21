@@ -3,6 +3,13 @@
   "version": "0.0.1",
   "description": "A Qwik library for scroll and time-driven reveal animations",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukeribchester/qwik.reveal.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./lib/index.qwik.mjs",
   "qwik": "./lib/index.qwik.mjs",
   "types": "./lib-types/index.d.ts",
