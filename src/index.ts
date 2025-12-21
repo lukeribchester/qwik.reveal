@@ -1,1 +1,1 @@
-export { RevealObserver } from "./library/reveal-observer";
+export { QwikReveal } from "./library/qwik-reveal";

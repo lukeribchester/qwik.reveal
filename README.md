@@ -47,17 +47,23 @@ Install the `@lgr.dev/qwik-reveal` dependency using your preferred package manag
 npm install @lgr.dev/qwik-reveal
 ```
 
-### 2. Load `RevealManager`
+### 2. Load `QwikReveal`
 
-Include the `RevealManager` component in your application root (or root layout).
+Include the `<QwikReveal/>` component in a `layout.tsx` (e.g. the root `src/routes/layout.tsx`).
+
+> [!IMPORTANT]
+> Loading `<QwikReveal/>` in `root.tsx` is not supported.
+>
+> This library depends on the `useLocation` API to support client-side
+> navigation ([see more](https://qwik.dev/docs/api/#uselocation-in-roottsx-is-not-supported)).
 
 ```typescript jsx
 import { component$, Slot } from '@builder.io/qwik';
-import { RevealManager } from '@lgr.dev/qwik-reveal';
+import { QwikReveal } from '@lgr.dev/qwik-reveal';
 
 export default component$(() => (
   <>
-    <RevealManager/>
+    <QwikReveal/>
     <Slot/>
   </>
 ));
