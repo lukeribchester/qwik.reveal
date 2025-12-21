@@ -3,9 +3,9 @@ import { buildPlan } from "../time";
 import { startTimeDriver } from "../time/observer";
 import { getTargetElements } from "./dom";
 import { isServer, prefersReducedMotion, supportsScrollDrivenAnimations } from "./environment";
-import type { RevealCleanup, TriggerPlan } from "./types";
+import type { RevealObserver, TriggerPlan } from "./types";
 
-export function reveal(scope: ParentNode = document): RevealCleanup {
+export function reveal(scope: ParentNode = document): RevealObserver {
   // Server-side rendering guard.
   if (isServer()) return (): void => {
   };

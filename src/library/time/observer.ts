@@ -1,5 +1,5 @@
 import { getIntersectionRatio } from "../core/dom";
-import type { RevealCleanup, TimeItem, TriggerGroup, TriggerPlan } from "../core/types";
+import type { RevealObserver, TimeItem, TriggerGroup, TriggerPlan } from "../core/types";
 import { applyInitialItemState, resetItem, revealItem } from "./state";
 
 const THRESHOLDS = Array.from({ length: 101 }, (_, i) => i / 100);
@@ -43,7 +43,7 @@ function deactivateTriggerGroup(triggerGroup: TriggerGroup): void {
 
 
 // TODO:
-export function startTimeDriver(plan: TriggerPlan): RevealCleanup {
+export function startTimeDriver(plan: TriggerPlan): RevealObserver {
   // Empty plan guard.
   if (plan.size === 0) return () => {
   };
@@ -79,7 +79,7 @@ export function startTimeDriver(plan: TriggerPlan): RevealCleanup {
     triggerGroups.forEach((triggerGroup: TriggerGroup) => initializeTriggerGroup(triggerGroup, observer));
   });
 
-  return () => {
+  return (): void => {
     for (const observer of observers) observer.disconnect();
   };
 }

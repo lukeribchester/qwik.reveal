@@ -1,4 +1,4 @@
-export type RevealCleanup = () => void;
+export type RevealObserver = () => void;
 
 export type Driver = "scroll" | "time" | "none";
 export type TimeState = "pending" | "revealed" | "shown";
