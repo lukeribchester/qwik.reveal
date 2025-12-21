@@ -9,6 +9,7 @@ const excludeAll = (obj: {}) => Object.keys(obj).map(makeRegex);
 
 export default defineConfig(() => {
   return {
+    publicDir: false,
     build: {
       target: "es2020",
       lib: {
