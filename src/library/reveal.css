@@ -1,88 +1,10 @@
-/*
-   Targets:
-     - .reveal              (single element target)
-     - .reveal-group        (group; direct children are targets)
-
-   Modifiers:
-     - .reveal-stagger      (enable staggering for group)
-     - .reveal--time        (force time-driven)
-     - .reveal--scroll      (force scroll-driven; no fallback)
-     - .reveal-repeat       (replay for time-driven)
-     - .reveal-initial-animate  (time-driven: animate even if initially visible)
-
-   Presets (scroll-driven ranges):
-     - .reveal-range--soft | --mid | --late
-   Notes:
-     - Grids: use .reveal--time for sequential pop-in.
-       Scroll-driven staggering for grids is intentionally disabled.
-*/
-
-@layer base {
-    :root {
-        /* Shared “look & feel” tokens */
-        --reveal-y: 1.75rem;
-        --reveal-blur: 0px;
-        --reveal-ease: cubic-bezier(.2, .8, .2, 1);
-
-        /* Time-driven tokens */
-        --reveal-duration: 650ms;
-        --reveal-delay-step: 90ms;
-
-        /* Time trigger threshold (intersection ratio) */
-        --reveal-threshold-view: 0.25;
-        --reveal-threshold-screen: 0.6;
-        --reveal-threshold: var(--reveal-threshold-view);
-
-        /* Scroll-driven timeline defaults */
-        --reveal-view-timeline: view(block 0 0);
-
-        /* Range presets: VIEW defaults */
-        --reveal-entry-start-soft: 10%;
-        --reveal-entry-end-soft: 60%;
-
-        --reveal-entry-start-mid: 20%;
-        --reveal-entry-end-mid: 70%;
-
-        --reveal-entry-start-late: 35%;
-        --reveal-entry-end-late: 90%;
-
-        /* Active preset (default = mid) */
-        --reveal-entry-start: var(--reveal-entry-start-mid);
-        --reveal-entry-end: var(--reveal-entry-end-mid);
-
-        /* Scroll-driven staggering distribution for LINEAR stacks only.
-           These are the min/max bounds that children will be distributed across.
-           (The enhancer sets --reveal-stagger-last and each child’s --reveal-i.) */
-        --reveal-stagger-start-min: 10%;
-        --reveal-stagger-start-max: 40%;
-        --reveal-stagger-end-min: 70%;
-        --reveal-stagger-end-max: 100%;
-    }
-
-    /* Screens (snap sections) get different defaults:
-       - higher time threshold (so “time” tends to fire when the screen is settled)
-       - tighter/earlier scroll ranges (tuned for fast snapping) */
-    .reveal-screen {
-        --reveal-threshold: var(--reveal-threshold-screen);
-
-        /* Range presets: SCREEN overrides */
-        --reveal-entry-start-soft: 10%;
-        --reveal-entry-end-soft: 65%;
-
-        --reveal-entry-start-mid: 20%;
-        --reveal-entry-end-mid: 65%;
-
-        --reveal-entry-start-late: 35%;
-        --reveal-entry-end-late: 85%;
-    }
-}
-
-@layer components {
+@layer reveal {
+    /* Keyframes */
     @keyframes reveal-fade-up {
         from {
-            opacity: 0;
-            translate: 0 var(--reveal-y);
-            filter: blur(var(--reveal-blur));
+            opacity: var(--reveal-opacity, 0);
+            translate: var(--reveal-x, 0) var(--reveal-y, 4rem);
+            filter: blur(var(--reveal-blur, 0));
         }
         to {
             opacity: 1;
@@ -91,44 +13,76 @@
         }
     }
 
-    /* Presets (apply to a target or a group; children inherit) */
-    .reveal-range--soft {
-        --reveal-entry-start: var(--reveal-entry-start-soft);
-        --reveal-entry-end: var(--reveal-entry-end-soft);
+    /* Presets */
+    .reveal-range--very-early {
+        --reveal-range-start: 0%;
+        --reveal-range-end: 15%;
+
+        --reveal-stagger-start-min: 0%;
+        --reveal-stagger-start-max: 10%;
+        --reveal-stagger-end-min: 15%;
+        --reveal-stagger-end-max: 40%;
+    }
+
+    .reveal-range--early {
+        --reveal-range-start: 0%;
+        --reveal-range-end: 20%;
+
+        --reveal-stagger-start-min: 0%;
+        --reveal-stagger-start-max: 15%;
+        --reveal-stagger-end-min: 20%;
+        --reveal-stagger-end-max: 50%;
     }
 
     .reveal-range--mid {
-        --reveal-entry-start: var(--reveal-entry-start-mid);
-        --reveal-entry-end: var(--reveal-entry-end-mid);
+        --reveal-range-start: 0%;
+        --reveal-range-end: 30%;
+
+        --reveal-stagger-start-min: 0%;
+        --reveal-stagger-start-max: 20%;
+        --reveal-stagger-end-min: 30%;
+        --reveal-stagger-end-max: 60%;
     }
 
     .reveal-range--late {
-        --reveal-entry-start: var(--reveal-entry-start-late);
-        --reveal-entry-end: var(--reveal-entry-end-late);
+        --reveal-range-start: 10%;
+        --reveal-range-end: 40%;
+
+        --reveal-stagger-start-min: 10%;
+        --reveal-stagger-start-max: 30%;
+        --reveal-stagger-end-min: 40%;
+        --reveal-stagger-end-max: 70%;
     }
 
-    /* Optional: force scroll scope if you ever need it */
-    .reveal-scope--view {
-        --reveal-scroll-timeline: var(--reveal-view-timeline);
+    .reveal-range--very-late {
+        --reveal-range-start: 20%;
+        --reveal-range-end: 55%;
+
+        --reveal-stagger-start-min: 20%;
+        --reveal-stagger-start-max: 40%;
+        --reveal-stagger-end-min: 55%;
+        --reveal-stagger-end-max: 85%;
     }
 
-    .reveal-scope--screen {
-        --reveal-scroll-timeline: --screen;
+    /* Presets (Screens) */
+    .reveal-screen .reveal-range--very-early,
+    .reveal-screen .reveal-range--early,
+    .reveal-screen .reveal-range--mid,
+    .reveal-screen .reveal-range--late,
+    .reveal-screen .reveal-range--very-late {
+        --reveal-stagger-end-min: 0%;
+        --reveal-stagger-end-max: 0%;
     }
 
-    /* -------------------------------------------------------------
-       TIME-DRIVEN (works everywhere; driven by data attributes set by JS)
-       - data-reveal-driver="time" marks time-managed targets.
-       - data-reveal = pending | revealed | shown
-    ------------------------------------------------------------- */
+    /* Time-Driven Animations */
     :where([data-reveal-driver="time"]) {
         will-change: opacity, translate, filter;
     }
 
     :where([data-reveal-driver="time"][data-reveal="pending"]) {
-        opacity: 0;
-        translate: 0 var(--reveal-y);
-        filter: blur(var(--reveal-blur));
+        opacity: var(--reveal-opacity, 0);
+        translate: var(--reveal-x, 0) var(--reveal-y, 4rem);
+        filter: blur(var(--reveal-blur, 0));
     }
 
     :where([data-reveal-driver="time"][data-reveal="shown"]) {
@@ -139,111 +93,157 @@
     }
 
     :where([data-reveal-driver="time"][data-reveal="revealed"]) {
-        /* time-based playback */
         animation-name: reveal-fade-up;
-        animation-duration: var(--reveal-duration);
-        animation-timing-function: var(--reveal-ease);
+        animation-duration: var(--reveal-duration, 500ms);
+        animation-timing-function: var(--reveal-ease, cubic-bezier(.2, .8, .2, 1));
         animation-fill-mode: both;
 
-        /* time staggering (index provided by enhancer; defaults to 0) */
-        animation-delay: calc(var(--reveal-i, 0) * var(--reveal-delay-step));
+        /* Single target delay & group staggering */
+        animation-delay: calc(var(--reveal-i, 1) * var(--reveal-delay-step, 100ms));
     }
 
-    /* -------------------------------------------------------------
-       SCROLL-DRIVEN (modern browsers only)
-       - auto defaults to scroll-driven when supported
-       - forced time (.reveal--time) is excluded
-       - group targets are direct children
-       - stagger uses math distribution (requires enhancer-provided indices)
-    ------------------------------------------------------------- */
+    /* Scroll-Driven Animations */
     @supports (animation-timeline: view()) {
-        :root {
-            --reveal-scroll-timeline: var(--reveal-view-timeline);
-        }
-
+        /* A .reveal-screen defines a named view-timeline (with a linked scroll-timeline) */
         .reveal-screen {
+            /* Named view-timeline */
             view-timeline-name: --screen;
             view-timeline-axis: block;
             view-timeline-inset: var(--reveal-screen-inset, 0 0);
 
-            /* default: inside screens, scroll is linked to the screen timeline */
+            /* Linked scroll-timeline */
             --reveal-scroll-timeline: --screen;
+
+            /* Default range modes (start/end) */
+            --reveal-range-start-name: cover;
+            --reveal-range-end-name: contain;
+
+            /* Default range values (start/end) */
+            --reveal-range-start-default: 20%;
+            --reveal-range-end-default: 40%;
+
+            --reveal-stagger-start-min-default: 20%;
+            --reveal-stagger-start-max-default: 40%;
+            --reveal-stagger-end-min-default: 80%;
+            --reveal-stagger-end-max-default: 100%;
         }
 
-        /* Base scroll-driven target styling (single targets) */
+        /* Scroll-timeline scope overrides
+         * Usage: Apply per target (single or group).
+         */
+        .reveal-scope--view {
+            /* Linked scroll-timeline (view) */
+            --reveal-scroll-timeline: var(--reveal-view-timeline, view(block 0 0));
+
+            /* Default range modes (start/end) */
+            --reveal-range-start-name: cover;
+            --reveal-range-end-name: cover;
+
+            /* Default range values (start/end) */
+            --reveal-range-start-default: 0%;
+            --reveal-range-end-default: 30%;
+
+            --reveal-stagger-start-min-default: 0%;
+            --reveal-stagger-start-max-default: 20%;
+            --reveal-stagger-end-min-default: 30%;
+            --reveal-stagger-end-max-default: 60%;
+        }
+
+        .reveal-scope--screen {
+            /* Linked scroll-timeline (nearest .reveal-screen) */
+            --reveal-scroll-timeline: --screen;
+
+            /* Default range modes (start/end) */
+            --reveal-range-start-name: cover;
+            --reveal-range-end-name: contain;
+
+            /* Default range values (start/end) */
+            --reveal-range-start-default: 0%;
+            --reveal-range-end-default: 30%;
+
+            --reveal-stagger-start-min-default: 0%;
+            --reveal-stagger-start-max-default: 20%;
+            --reveal-stagger-end-min-default: 0%;
+            --reveal-stagger-end-max-default: 0%;
+        }
+
+        /* Scroll-driven target (single) */
         :where(.reveal):not(.reveal--time) {
-            opacity: 0;
-            translate: 0 var(--reveal-y);
-            filter: blur(var(--reveal-blur));
+            opacity: var(--reveal-opacity, 0);
+            translate: var(--reveal-x, 0) var(--reveal-y, 4rem);
+            filter: blur(var(--reveal-blur, 0));
 
             animation-name: reveal-fade-up;
-            animation-duration: 1s;
-            animation-timing-function: var(--reveal-ease);
+            animation-duration: var(--reveal-duration, 500ms);
+            animation-timing-function: var(--reveal-scroll-ease, var(--reveal-ease, cubic-bezier(.2, .8, .2, 1)));
             animation-fill-mode: both;
 
-            animation-timeline: var(--reveal-scroll-timeline);
-            animation-range: entry var(--reveal-entry-start) entry var(--reveal-entry-end);
+            animation-timeline: var(--reveal-scroll-timeline, var(--reveal-view-timeline, view(block 0 0)));
+
+            animation-range: var(--reveal-range-start-name, cover) var(--reveal-range-start, var(--reveal-range-start-default, 0%)) var(--reveal-range-end-name, cover) var(--reveal-range-end, var(--reveal-range-end-default, 30%));
 
             will-change: opacity, translate, filter;
         }
 
-        /* Base scroll-driven target styling (group children) */
+        /* Scroll-driven target (group) */
         :where(.reveal-group):not(.reveal--time) > :where(*):not(.reveal-ignore):not(.reveal--time) {
-            opacity: 0;
-            translate: 0 var(--reveal-y);
-            filter: blur(var(--reveal-blur));
+            opacity: var(--reveal-opacity, 0);
+            translate: var(--reveal-x, 0) var(--reveal-y, 4rem);
+            filter: blur(var(--reveal-blur, 0));
 
             animation-name: reveal-fade-up;
-            animation-duration: 1s;
-            animation-timing-function: var(--reveal-ease);
+            animation-duration: var(--reveal-duration, 500ms);
+            animation-timing-function: var(--reveal-scroll-ease, var(--reveal-ease, cubic-bezier(.2, .8, .2, 1)));
             animation-fill-mode: both;
 
-            animation-timeline: var(--reveal-scroll-timeline);
-            animation-range: entry var(--reveal-entry-start) entry var(--reveal-entry-end);
+            animation-timeline: var(--reveal-scroll-timeline, var(--reveal-view-timeline, view(block 0 0)));
+
+            animation-range: var(--reveal-range-start-name, cover) var(--reveal-range-start, var(--reveal-range-start-default, 0%)) var(--reveal-range-end-name, cover) var(--reveal-range-end, var(--reveal-range-end-default, 30%));
 
             will-change: opacity, translate, filter;
         }
 
-        /* Scroll-driven range staggering (LINEAR stacks only)
-           - Requires: parent has .reveal-stagger
-           - The enhancer provides:
-             --reveal-stagger-last (>= 1)
-             each child: --reveal-i (0..count-1)
-        */
+        /* Scroll-driven target (staggered group)
+         * Behaviour: Staggers group elements with a delay based on their index.
+         */
         :where(.reveal-group.reveal-stagger):not(.reveal--time) > :where(*):not(.reveal-ignore):not(.reveal--time) {
             animation-range: var(--reveal-range-start-name, cover) clamp(
                     0%,
                     calc(
-                            var(--reveal-stagger-start-min) +
+                            var(--reveal-stagger-start-min, var(--reveal-stagger-start-min-default, 0%)) +
                             (var(--reveal-i, 0) *
-                            (var(--reveal-stagger-start-max) - var(--reveal-stagger-start-min)) /
+                            (var(--reveal-stagger-start-max, var(--reveal-stagger-start-max-default, 20%)) - var(--reveal-stagger-start-min, var(--reveal-stagger-start-min-default, 0%))) /
                             var(--reveal-stagger-last, 1))
                     ),
                     100%
-            ) var(--reveal-range-end-name, contain) clamp(
+            ) var(--reveal-range-end-name, cover) clamp(
                     0%,
                     calc(
-                            var(--reveal-stagger-end-min) +
+                            var(--reveal-stagger-end-min, var(--reveal-stagger-end-min-default, 30%)) +
                             (var(--reveal-i, 0) *
-                            (var(--reveal-stagger-end-max) - var(--reveal-stagger-end-min)) /
+                            (var(--reveal-stagger-end-max, var(--reveal-stagger-end-max-default, 60%)) - var(--reveal-stagger-end-min, var(--reveal-stagger-end-min-default, 30%))) /
                             var(--reveal-stagger-last, 1))
                     ),
                     100%
             );
         }
 
-        /* Don’t attempt per-item scroll stagger for Tailwind grids.
-           (Use .reveal--time if you want ordered pop-in.) */
+        /* Scroll-driven target (staggered grid)
+         * Behaviour: Animates grid elements based on:
+         *            - row/column (view-scoped);
+         *            - whole grid (screen-scoped).
+         */
         :where(.reveal-group.reveal-stagger.grid):not(.reveal--time) {
-            --reveal-stagger-start-max: var(--reveal-stagger-start-min);
-            --reveal-stagger-end-max: var(--reveal-stagger-end-min);
+            --reveal-stagger-start-max: var(--reveal-stagger-start-min, var(--reveal-stagger-start-min-default, 0%));
+            --reveal-stagger-end-max: var(--reveal-stagger-end-min, var(--reveal-stagger-end-min-default, 30%));
         }
     }
 
-    /* Accessibility: always respect reduced motion */
+    /* Reduced Motion */
     @media (prefers-reduced-motion: reduce) {
         :where(.reveal),
-        :where(.reveal-group) > :where(*) {
+        :where(.reveal-group) > :where(*),
+        :where([data-reveal-driver="time"]) {
             animation: none !important;
             opacity: 1 !important;
             translate: 0 0 !important;
