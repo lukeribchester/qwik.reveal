@@ -7,6 +7,25 @@
 Scroll and time-driven reveal animations for Qwik applications, based on modern web standards with graceful fallback for
 full browser compatibility.
 
+<!-- TOC -->
+
+* [Introduction](#qwik-reveal-)
+  * [Browser Support](#browser-support)
+  * [Preview](#preview)
+* [Get Started](#get-started)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Modes](#modes)
+  * [Scroll Containers (Optional)](#scroll-containers-optional)
+* [Customisation](#customisation)
+  * [Attribute Reference](#attribute-reference)
+  * [Class Reference](#class-reference)
+  * [Animation Presets](#animation-presets)
+  * [Custom Properties (Variables)](#custom-properties-variables)
+* [Troubleshooting](#troubleshooting)
+
+<!-- TOC -->
+
 <br>
 
 ## Browser Support
@@ -36,6 +55,8 @@ the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API
 <img src="https://github.com/user-attachments/assets/a0ebc306-578c-4f4a-a648-9d9639c27b20"/>
 
 <br>
+
+# Get Started
 
 ## Installation
 
@@ -191,55 +212,58 @@ export const Container = component$(() => (
 
 <br>
 
+# Customisation
+
 ## Attribute Reference
 
-**`data-reveal-root`:** Declares an element as the scroll root for the time-driven scroll driver.
+| **Attribute Name** | Description                                                               |
+|--------------------|---------------------------------------------------------------------------|
+| `data-reveal-root` | Declares an element as the scroll root for the time-driven scroll driver. |
 
 ## Class Reference
 
-### Target
+| **Class Name**                  | Description                                                                           |
+|---------------------------------|---------------------------------------------------------------------------------------|
+| <br/>**Target**                 |                                                                                       |
+| `reveal`                        | Declares a single element as an animation target.                                     |
+| `reveal-group`                  | Declares a container whose direct children are animation targets.                     |
+| `reveal-ignore`                 | Exclude a child from group targeting.                                                 |
+| <br/>**Stagger**                |                                                                                       |
+| `reveal-stagger`                | Enables animation staggering within a targeted group.                                 |
+| <br/>**Mode**                   |                                                                                       |
+| `reveal--time`                  | Forces time-driven animations even on browsers which support scroll-driven animation. |
+| `reveal--scroll`                | Forces scroll-driven animations regardless of browser compatibility.                  |
+| <br/>**Trigger (Time-driven)**  |                                                                                       |
+| `reveal-trigger--self`          |                                                                                       |
+| <br/>**Scope (Scroll-driven)**  |                                                                                       |
+| `reveal-scope--screen`          |                                                                                       |
+| `reveal-scope--view`            |                                                                                       |
+| <br/>**Playback (Time-driven)** |                                                                                       |
+| `reveal-repeat`                 | Replays the time-driven animation whenever the target leaves and re-enters the view.  |
+| `reveal-initial-animate`        | Animates the target even if already visible (i.e. above the fold).                    |
 
-**`reveal`:** Declares a single element as an animation target.
+## Animation Presets
 
-**`reveal-group`:** Declares a container whose direct children are animation targets.
+| Class Name                 | **Description**                         |
+|----------------------------|-----------------------------------------|
+| <br/>**Range**             |                                         |
+| `reveal-range--very-early` | Animation begins and ends very early.   |
+| `reveal-range--early`      | Animation is earlier and more subtle.   |
+| `reveal-range--mid`        | Balanced animation (default).           |
+| `reveal-range--late`       | Animation is later and more pronounced. |
+| `reveal-range--very-late`  | Animation begins and ends very late.    |
+| <br/>**From (Direction)**  |                                         |
+| `reveal-from--left`        | Animates in from the left.              |
+| `reveal-from--right`       | Animates in from the right.             |
+| `reveal-from--top`         | Animates in from the top.               |
+| `reveal-from--bottom`      | Animates in from the bottom.            |
 
-**`reveal-ignore`:** Exclude a child from group targeting.
+## Custom Properties (Variables)
 
-### Stagger
-
-**`reveal-stagger`:** Enables animation staggering within a targeted group.
-
-- Scroll-driven: Range staggering using runtime indices and CSS math.
-- Time-driven: Time staggering using runtime indices and CSS `animation-delay`.
-
-### Mode
-
-**`reveal--time`:** Forces scroll-driven animations regardless of browser compatibility.
-**`reveal--scroll`:** Forces time-driven animations even on browsers which support scroll-driven animation.
-
-### Trigger (Time-driven)
-
-**`reveal-trigger--self`:**
-
-### Scope (Scroll-driven)
-
-**`reveal-scope--screen`:**
-
-**`reveal-scope--view`:**
-
-### Playback (Time-driven)
-
-**`reveal-repeat`:** Replays the time-driven animation whenever the target leaves and re-enters the view.
-
-**`reveal-initial-animate`:** Animates the target even if already visible (i.e. above the fold).
-
-### Presets
-
-**`reveal-range--soft`:** Earlier, shorter, and more subtle animation.
-
-**`reveal-range--mid`:** Balanced animation (default).
-
-**`reveal-range--late`:** Later, slower, stronger animation.
+| Token Name        | **Description** |
+|-------------------|-----------------|
+| <br/>**Position** |                 |
+|                   |                 |
 
 <br>
 

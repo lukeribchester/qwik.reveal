@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] – 2025-12-25
+
+### Added
+
+- API reference documentation
+
 ## [1.2.0] – 2025-12-23
 
 ### Added
