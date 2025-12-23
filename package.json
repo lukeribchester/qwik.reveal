@@ -1,6 +1,6 @@
 {
   "name": "@lgr.dev/qwik-reveal",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A Qwik library for scroll and time-driven reveal animations",
   "license": "MIT",
   "repository": {
