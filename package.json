@@ -47,6 +47,10 @@
     "test": "echo \"No test specified\" && exit 0",
     "qwik": "qwik"
   },
+  "peerDependencies": {
+    "@builder.io/qwik": ">=1 <2",
+    "@builder.io/qwik-city": ">=1 <2"
+  },
   "devDependencies": {
     "@builder.io/qwik": "1.18.0",
     "@builder.io/qwik-city": "^1.18.0",
