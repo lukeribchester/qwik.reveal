@@ -64,6 +64,26 @@
         --reveal-stagger-end-max: 85%;
     }
 
+    .reveal-from--left {
+        --reveal-x: -100vw;
+        --reveal-y: 0;
+    }
+
+    .reveal-from--right {
+        --reveal-x: 100vw;
+        --reveal-y: 0;
+    }
+
+    .reveal-from--top {
+        --reveal-x: 0;
+        --reveal-y: -100vh;
+    }
+
+    .reveal-from--bottom {
+        --reveal-x: 0;
+        --reveal-y: 100vh;
+    }
+
     /* Presets (Screens) */
     .reveal-screen .reveal-range--very-early,
     .reveal-screen .reveal-range--early,

@@ -1,11 +1,26 @@
 # Changelog
 
+## [1.2.0] – 2025-12-23
+
+### Added
+
+- Animation presets:
+    - `reveal-from--left`
+    - `reveal-from--right`
+    - `reveal-from--top`
+    - `reveal-from--bottom`
+
 ## [1.1.0] – 2025-12-23
 
 ### Added
 
 - Support for client-side navigation
-- Animation range presets
+- Animation presets:
+    - `reveal-range--very-early`
+    - `reveal-range--early`
+    - `reveal-range--mid`
+    - `reveal-range--late`
+    - `reveal-range--very-late`
 
 ### Changed
 

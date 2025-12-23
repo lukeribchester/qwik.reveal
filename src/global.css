@@ -91,12 +91,5 @@
 
     #scroll-driven, #time-driven {
         @apply flex w-10/12 max-w-[900px] flex-col items-stretch justify-center text-left gap-8 text-[clamp(0.875rem,5vw,1.25rem)] sm:w-9/12 md:w-8/12 lg:w-6/12;
-
-        .from-left {
-            --reveal-duration: 500ms;
-            --reveal-delay-step: 100ms;
-            --reveal-x: -50vw;
-            --reveal-y: 0;
-        }
     }
 }

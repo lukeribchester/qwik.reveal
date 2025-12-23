@@ -3,7 +3,7 @@ import { component$ } from "@builder.io/qwik";
 export const TimeDriven = component$(() => {
   return (
     <div id="time-driven">
-      <h2 class="reveal reveal--time from-left">
+      <h2 class="reveal reveal--time reveal-from--left">
         <span class="text-(--color-purple) block">Time-driven</span> animations
       </h2>
 
