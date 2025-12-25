@@ -1,6 +1,10 @@
-<p align="center">
+<div align="center">
   <img src="./logo.svg" width="384" alt="Qwik Reveal">
-</p>
+
+[![NPM Version](https://img.shields.io/npm/v/%40lgr.dev%2Fqwik-reveal?style=for-the-badge&color=%23009dfd)](https://www.npmjs.com/package/@lgr.dev/qwik-reveal)
+[![NPM Downloads](https://img.shields.io/npm/d18m/%40lgr.dev%2Fqwik-reveal?style=for-the-badge&color=%23ac7ef4)](https://www.npmjs.com/package/@lgr.dev/qwik-reveal)
+[![GitHub License](https://img.shields.io/github/license/lukeribchester/qwik.reveal?style=for-the-badge&color=%23444)](https://github.com/lukeribchester/qwik.reveal/blob/main/LICENSE.md)
+</div>
 
 # Qwik Reveal ⚡️
 
