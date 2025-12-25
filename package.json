@@ -2,7 +2,24 @@
   "name": "@lgr.dev/qwik-reveal",
   "version": "1.2.0",
   "description": "A Qwik library for scroll and time-driven reveal animations",
+  "keywords": [
+    "Qwik",
+    "Qwik City",
+    "Animations"
+  ],
+  "homepage": "https://qwik-reveal.lgr.dev",
+  "bugs": {
+    "url": "https://github.com/lukeribchester/qwik.reveal/issues"
+  },
   "license": "MIT",
+  "author": {
+    "name": "Luke Gareth Ribchester",
+    "url": "https://luke.gr"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/lukeribchester"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukeribchester/qwik.reveal.git"
